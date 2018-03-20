@@ -1,5 +1,7 @@
-question_file = "test_qs.txt"				# file containing questions
-output_file = "test.csv"					# output file; CSV for Excel spreadsheet
+# simple offline survey program I wrote for my brother; with a file containing questions (with certain syntax
+# dictating how questions can be answered), will endlessly cycle through the questions so user can run simple surveys
+question_file = ""				# file containing questions
+output_file = ""				# output file; CSV for Excel spreadsheet
 thanks_message = "Thanks for your time!"	# final message to user
 
 survey_questions = {}
@@ -8,31 +10,31 @@ survey = []
 with open(question_file) as f:
 	data = f.readlines()
 	
-previous_q = ""								# keep track in case there are options for the question
+previous_q = ""		# keep track in case there are options for the question
 
 # build question list
 for line in data:							
 	line = line.strip("\n")
-	if "\t" in line:						# there are options
+	if "\t" in line:		# there are options
 		survey_questions[previous_q].append(line)
-	else:									# free response
+	else:				# free response
 		survey_questions[line] = []
 		survey.append(line)
 		previous_q = line
 
-with open(output_file, "w") as f:			# start the CSV
+with open(output_file, "w") as f:	# start the CSV with questions as the headers
 	f.write("Name")
 	for q in survey_questions:
 		f.write("," + q)
 	f.write("\n")
 
 while True:
-	responses = []							# keep track of one respondents responses to each question
+	responses = []				# keep track of one respondents responses to each question
 	response = ""
 	name = input("Name: ")
-	if name == "DoNe":						# quit survey
+	if name == "DoNe":			# quit survey
 		quit()
-	for q in survey:						# go through the question list we built earlier
+	for q in survey:			# go through the question list we built earlier
 		if not survey_questions[q]:
 			print(q)
 			response = input("> ")
