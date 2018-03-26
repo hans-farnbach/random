@@ -81,5 +81,5 @@ while True:
 	print(thanks_message)
 	# write responses to output file, then start again
 	with open(output_file, "a") as f:
-		f.write(name)
-		f.write(",".join(response) + "\n")
+		f.write(name + ",")
+		f.write(",".join(responses) + "\n")
